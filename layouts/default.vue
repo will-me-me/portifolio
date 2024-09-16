@@ -1,7 +1,13 @@
 <template>
   <v-app>
     <!-- Application Bar with Elevated Effect and Rounded Corners -->
-    <v-app-bar flat rounded color="" height="120">
+    <v-app-bar
+      flat
+      rounded
+      color=""
+      height="120"
+      style="border-bottom: 5px solid #6a1b9a"
+    >
       <div class="mt-0 d-flex justify-center ml-12">
         <v-avatar
           variant="outlined"
