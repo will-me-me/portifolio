@@ -1,0 +1,27 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^3.12.2",
+    "typed.js": "^2.1.0",
+    "typescript": "^4.0.0",
+    "vue": "^3.4.29",
+    "vue-router": "^4.3.3",
+    "vue-typed-js": "^0.1.2",
+    "vue-typer": "^1.2.0",
+    "vuetify-nuxt-module": "^0.14.1"
+  },
+  "devDependencies": {
+    "@vueuse/core": "^11.1.0",
+    "@vueuse/nuxt": "^11.1.0",
+    "nuxt-particles": "^0.3.0"
+  }
+}
