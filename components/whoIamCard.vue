@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="mx-auto sleek-card pa-6 mt-6"
+    class="mx-auto sleek-card pa-6 mt-10"
     max-width="600"
     elevation="12"
     shaped
@@ -25,7 +25,7 @@
     </v-card-subtitle>
 
     <!-- Card Text -->
-    <v-card-text class="text-center text--secondary pa-4 card-text">
+    <v-card-text class="text-center text--secondary pa-8 card-text">
       Hello, I'm <strong>William Karia</strong>, a passionate
       <strong>Software Engineer</strong> based in the vibrant city of
       <strong>Nairobi, Kenya</strong>. My expertise lies in
@@ -37,7 +37,7 @@
     </v-card-text>
 
     <!-- Social Icons -->
-    <v-card-actions class="d-flex justify-center mt-4 mb-2">
+    <v-card-actions class="d-flex justify-center mt-6 mb-2">
       <v-btn icon class="social-icon" @click="redirectToX">
         <v-icon color="primary" size="32">mdi-twitter</v-icon>
       </v-btn>
