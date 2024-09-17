@@ -1,14 +1,21 @@
 <template>
-  <v-card class="mx-auto sleek-card pa-6" max-width="600" elevation="12" shaped>
-    <!-- Avatar -->
-    <div class="d-flex justify-end">
-      <v-avatar class="mx-auto avatar mt-4" size="120">
-        <v-img src="/imgs/DSC_116511.jpg" alt="William Karia" />
+  <v-card
+    class="mx-auto sleek-card pa-6 mt-6"
+    max-width="600"
+    elevation="12"
+    shaped
+  >
+    <!-- Avatar with an accent circle around it -->
+    <div class="d-flex justify-center">
+      <v-avatar class="avatar-border mt-4">
+        <v-avatar class="avatar" size="120">
+          <v-img src="/imgs/DSC_116511.jpg" alt="William Karia" />
+        </v-avatar>
       </v-avatar>
     </div>
 
     <!-- Name -->
-    <v-card-title class="text-h4 font-weight-bold text-center mt-4">
+    <v-card-title class="text-h4 font-weight-bold text-center mt-4 name">
       William Karia
     </v-card-title>
 
@@ -19,36 +26,27 @@
 
     <!-- Card Text -->
     <v-card-text class="text-center text--secondary pa-4 card-text">
-      I specialize in front-end development using modern web technologies like
-      Vue.js and Nuxt.js to build dynamic and responsive user interfaces. Let’s
-      collaborate and bring your ideas to life!
+      Hello, I'm <strong>William Karia</strong>, a passionate
+      <strong>Software Engineer</strong> based in the vibrant city of
+      <strong>Nairobi, Kenya</strong>. My expertise lies in
+      <strong>backend development</strong> with <strong>Python</strong> and the
+      <strong>FastAPI framework</strong>, crafting seamless, scalable systems. I
+      also excel in creating engaging front-end experiences using
+      <strong>Vue.js</strong> and <strong>Nuxt.js</strong>. Together, let's
+      transform innovative ideas into reality with modern, efficient solutions.
     </v-card-text>
 
     <!-- Social Icons -->
     <v-card-actions class="d-flex justify-center mt-4 mb-2">
-      <div>
-        <v-icon
-          @click="redirectToX"
-          variant="outlined"
-          color=""
-          icon="mdi-twitter"
-          size="x-large"
-        ></v-icon>
-        <v-icon
-          @click="OpenGit"
-          variant="outlined"
-          color=""
-          icon="mdi-github"
-          size="x-large"
-        ></v-icon>
-        <v-icon
-          @click="redirectToLinked"
-          variant="outlined"
-          color=""
-          icon="mdi-linkedin"
-          size="x-large"
-        ></v-icon>
-      </div>
+      <v-btn icon class="social-icon" @click="redirectToX">
+        <v-icon color="primary" size="32">mdi-twitter</v-icon>
+      </v-btn>
+      <v-btn icon class="social-icon" @click="OpenGit">
+        <v-icon color="primary" size="32">mdi-github</v-icon>
+      </v-btn>
+      <v-btn icon class="social-icon" @click="redirectToLinked">
+        <v-icon color="primary" size="32">mdi-linkedin</v-icon>
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -66,42 +64,57 @@ const redirectToLinked = () => {
 </script>
 
 <style scoped>
+/* Sleek and professional card styling */
 .sleek-card {
   border-radius: 16px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #f0f4f8, #e6ebf1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.sleek-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Avatar with accent border */
+.avatar-border {
+  padding: 5px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1976d2, #42a5f5);
 }
 
 .avatar {
-  border: 1px solid #232324;
   border-radius: 50%;
 }
 
+/* Name and subtitle styling */
+.name {
+  font-family: "Poppins", sans-serif;
+  color: #1a237e;
+}
+
 .subtitle {
-  color: #616161;
-  font-size: 1rem;
+  color: #37474f;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.1rem;
   font-weight: 500;
 }
 
+/* Card text with better readability */
 .card-text {
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: 1.8;
+  color: #546e7a;
 }
 
-.v-btn {
+/* Social icon hover effects */
+.social-icon {
   margin: 0 10px;
   transition: all 0.3s ease;
 }
 
-.v-btn:hover {
-  background-color: #f5f5f5;
-}
-
-.v-icon {
-  transition: transform 0.3s ease;
-}
-
-.v-btn:hover .v-icon {
-  transform: scale(1.2);
+.social-icon:hover .v-icon {
+  transform: scale(1.3);
+  color: #1976d2;
 }
 </style>
