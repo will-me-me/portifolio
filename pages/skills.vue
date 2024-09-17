@@ -1,58 +1,85 @@
 <template>
   <div class="skills_container">
     <v-card elevation="15">
-      <v-container color="transparent">
-        <h2 class="skills_title"><span> &lt; Skills /&gt;</span></h2>
-        <v-row>
-          <v-col
-            cols="12"
-            md="3"
-            sm="4"
-            v-for="skills in mySkills"
-            :key="skills.title"
-          >
-            <v-lazy
-              :min-height="200"
-              :options="{ threshold: 0.5 }"
-              transition="fade-transition"
-            >
-              <v-card
-                class="pa-2 cursor-progress"
-                variant="outlined"
-                hover
-                max-width="450"
+      <v-timeline side="end">
+        <v-timeline-item
+          v-for="item in items"
+          :key="item.id"
+          :dot-color="item.color"
+          size="small"
+          fill-dot
+          :icon="item.icon"
+        >
+          <v-container color="transparent">
+            <h2 class="skills_title"><span> &lt; Skills /&gt;</span></h2>
+            <v-row>
+              <v-col
+                cols="12"
+                md="3"
+                sm="4"
+                v-for="skills in mySkills"
+                :key="skills.title"
               >
-                <v-card-title>
-                  <span>{{ skills.title }}</span>
-                </v-card-title>
-                <v-divider></v-divider>
-                <div class="d-flex justify-center">
-                  <v-avatar variant="" size="60" :image="skills.svg"></v-avatar>
-                </div>
-                <v-divider></v-divider>
-                <v-card-text class="text-center">
-                  <v-rating
-                    density="comfortable"
-                    active-color="gray"
-                    color="orange-lighten-1"
-                    v-model="skills.rating"
-                    readonly
-                    size="x-small"
-                    half-increments
+                <v-lazy
+                  :min-height="200"
+                  :options="{ threshold: 0.5 }"
+                  transition="fade-transition"
+                >
+                  <v-card
+                    class="pa-2 cursor-progress"
+                    variant="outlined"
+                    hover
+                    max-width="450"
                   >
-                  </v-rating>
-                </v-card-text>
-                <v-divider></v-divider>
-              </v-card>
-            </v-lazy>
-          </v-col>
-        </v-row>
-      </v-container>
+                    <v-card-title>
+                      <span>{{ skills.title }}</span>
+                    </v-card-title>
+                    <v-divider></v-divider>
+                    <div class="d-flex justify-center">
+                      <v-avatar
+                        variant=""
+                        size="60"
+                        :image="skills.svg"
+                      ></v-avatar>
+                    </div>
+                    <v-divider></v-divider>
+                    <v-card-text class="text-center">
+                      <v-rating
+                        density="comfortable"
+                        active-color="gray"
+                        color="orange-lighten-1"
+                        v-model="skills.rating"
+                        readonly
+                        size="x-small"
+                        half-increments
+                      >
+                      </v-rating>
+                    </v-card-text>
+                    <v-divider></v-divider>
+                  </v-card>
+                </v-lazy>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-timeline-item>
+      </v-timeline>
     </v-card>
   </div>
 </template>
 
 <script setup>
+const items = [
+  {
+    id: 1,
+    color: "info",
+    icon: "mdi-star",
+  },
+  // {
+  //   id: 2,
+  //   color: "error",
+  //   icon: "mdi-alert-circle",
+  // },
+];
 const mySkills = [
   {
     title: "javascript",

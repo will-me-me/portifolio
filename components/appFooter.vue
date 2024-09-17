@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="bg-teal-lighten-1 mt-0">
+  <v-footer class="bg-teal-darken-4">
     <v-row justify="center" no-gutters>
       <v-btn
         v-for="link in links"
