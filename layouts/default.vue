@@ -5,13 +5,13 @@
       flat
       rounded
       color=""
-      height="120"
+      height="100"
       style="border-bottom: 5px solid #6a1b9a"
     >
       <div class="mt-0 d-flex justify-center ml-12">
         <v-avatar
           variant="outlined"
-          size="80"
+          size="60"
           image="/imgs/DSC_116511.jpg"
           style="border: 2px solid purple"
         ></v-avatar>
@@ -69,7 +69,11 @@
     <!-- Main Content -->
     <v-main>
       <slot />
+      <!-- <NuxtPage /> -->
     </v-main>
+    <br />
+    <br />
+    <app-footer />
   </v-app>
 </template>
 

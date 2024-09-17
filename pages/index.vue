@@ -27,7 +27,6 @@
     </div>
   </div>
   <!-- <skills /> -->
-  <app-footer />
 </template>
 
 <script setup>

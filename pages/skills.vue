@@ -50,7 +50,6 @@
       </v-container>
     </v-card>
   </div>
-  <app-footer />
 </template>
 
 <script setup>
