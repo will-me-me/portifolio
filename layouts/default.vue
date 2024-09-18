@@ -8,15 +8,25 @@
       height="100"
       style="border-bottom: 5px solid #6a1b9a"
     >
-      <div class="mt-0 d-flex justify-center ml-12">
+      <div class="mt-0 d-flex justify-center ml-4 hidden-lg-and-up">
         <v-avatar
+          class="hidden-lg-and-up"
+          variant="outlined"
+          size="50"
+          image="/imgs/DSC_116511.jpg"
+          style="border: 1px solid purple"
+        ></v-avatar>
+      </div>
+      <div class="mt-0 d-flex justify-center ml-12 hidden-sm-and-down">
+        <v-avatar
+          class="hidden-sm-and-down"
           variant="outlined"
           size="60"
           image="/imgs/DSC_116511.jpg"
           style="border: 2px solid purple"
         ></v-avatar>
       </div>
-      <div class="ml-4">
+      <div class="ml-4 hidden-sm-and-down">
         <h1
           style="color: rgba(255, 255, 255, 0.2)"
           class="text-center drawer_anchor"
@@ -31,26 +41,45 @@
         </h1>
       </div>
       <!-- Navigation Drawer Toggle Button -->
-      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
       <!-- Application Title -->
       <!-- <v-app-bar-title>My Portfolio</v-app-bar-title> -->
 
       <!-- Navigation Links -->
       <v-spacer></v-spacer>
-      <v-btn text class="mx-2 white--text" @click="navigateTo('home')"
+      <v-app-bar-nav-icon
+        class="hidden-lg-and-up custom-nav-icon"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+
+      <v-btn
+        text
+        class="mx-2 white--text hidden-sm-and-down"
+        @click="navigateTo('home')"
         >Home</v-btn
       >
-      <v-btn text class="mx-2 white--text" @click="navigateTo('about')"
+      <v-btn
+        text
+        class="mx-2 white--text hidden-sm-and-down"
+        @click="navigateTo('about')"
         >About</v-btn
       >
-      <v-btn text class="mx-2 white--text" @click="navigateTo('services')"
+      <v-btn
+        text
+        class="mx-2 white--text hidden-sm-and-down"
+        @click="navigateTo('services')"
         >Services</v-btn
       >
-      <v-btn text class="mx-2 white--text" @click="navigateTo('skills')"
+      <v-btn
+        text
+        class="mx-2 white--text hidden-sm-and-down"
+        @click="navigateTo('skills')"
         >Skills</v-btn
       >
-      <v-btn text class="mx-2 white--text" @click="navigateTo('projects')"
+      <v-btn
+        text
+        class="mx-2 white--text hidden-sm-and-down"
+        @click="navigateTo('projects')"
         >Projects</v-btn
       >
 
@@ -71,14 +100,25 @@
       <slot />
       <!-- <NuxtPage /> -->
     </v-main>
-    <br />
-    <br />
-    <app-footer />
+    <!-- <br /> -->
+    <!-- <br /> -->
+    <app-footer :links="links" />
+    <app-drawe :links="links" v-model="drawer" />
   </v-app>
 </template>
 
 <script setup>
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+const links = [
+  { name: "Home", path: "/", icon: "mdi-home" },
+  { name: "About", path: "/about", icon: "mdi-account" },
+  { name: "Services", path: "/services", icon: "mdi-briefcase" },
+  { name: "Skills", path: "/skills", icon: "mdi-tools" },
+  { name: "Projects", path: "/projects", icon: "mdi-folder-outline" },
+];
+
+const drawer = ref(false);
 
 const router = useRouter();
 const navigateTo = (page) => {
@@ -124,5 +164,10 @@ const navigateTo = (page) => {
 .drawer_anchor a {
   text-decoration: none;
   color: rgba(10, 10, 10, 0.979);
+}
+.custom-nav-icon {
+  color: purple; /* White icon for visibility */
+  font-size: 25px; /* Larger size for a modern look */
+  transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition on hover */
 }
 </style>

@@ -1,25 +1,11 @@
 <template>
-  <!-- <v-layout> -->
-  <!-- <v-app-bar flat color="transparent">
-      <v-spacer></v-spacer>
-      <v-app-bar-nav-icon
-        variant="outlined"
-        class="mr-2"
-        size="60"
-        @click.stop="drawer = !drawer"
-      >
-      </v-app-bar-nav-icon>
-    </v-app-bar> -->
   <v-navigation-drawer
-    app
     class="bg-#040b14"
     theme="dark"
-    floating
-    temporary
     :width="300"
     color="#040b14"
-    permanent
-    persistent
+    temporary
+    floating
   >
     <div class="mt-0 d-flex justify-center">
       <v-avatar
@@ -65,42 +51,42 @@
     <br />
     <v-divider></v-divider>
 
-    <v-list density="compact" class="ml-9" nav>
+    <v-list
+      v-for="(link, i) in links"
+      :key="i"
+      density="compact"
+      class="ml-9"
+      nav
+    >
       <v-list-item
-        prepend-icon="mdi-home-city"
-        title="Home"
-        value="home"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-account"
-        title="Skills"
-        value="account"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-account-group-outline"
-        title="Projects"
-        value="users"
+        :prepend-icon="link.icon"
+        :title="link.name"
+        :value="link.name"
+        @click="navigateTo(link.path)"
       ></v-list-item>
     </v-list>
   </v-navigation-drawer>
-
-  <!-- </v-layout> -->
-  <!-- <v-main> <slot /> </v-main> -->
 </template>
 
 <script setup>
-import { useDrawer } from "../composables/states";
+import { useRouter } from "vue-router";
 
-import { ref, computed } from "vue";
-import { useDisplay } from "vuetify";
+const router = useRouter();
 
-const drawer = useDrawer();
+const props = defineProps({
+  links: {
+    type: Array,
+    required: true,
+  },
+  drawer: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-// const CloseDrawer = () => {
-//   console.log(drawer);
-//   console.log(!drawer);
-//   return !drawer;
-// };
+const navigateTo = (path) => {
+  router.push(path);
+};
 
 const redirectToX = () => {
   window.open("https://twitter.com/willy_karia", "_blank");

@@ -8,8 +8,9 @@
         color="white"
         rounded="xl"
         variant="text"
+        :to="link.path"
       >
-        {{ link }}
+        {{ link.name }}
       </v-btn>
       <v-btn @click="toggleDark()" class="mx-2" color="white" rounded="xl">
         <!-- Conditional Icon based on dark mode state -->
@@ -26,20 +27,43 @@
   </v-footer>
 </template>
 <script setup>
-import { useDark, useToggle, usePreferredDark } from "@vueuse/core";
+import {
+  useDark,
+  useToggle,
+  usePreferredDark,
+  useColorMode,
+} from "@vueuse/core";
 
-// Define the links array
-const links = ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"];
-
+const props = defineProps({
+  links: {
+    type: Array,
+    required: true,
+  },
+});
 // Detect if the system prefers dark mode
-const preferredDark = usePreferredDark();
-// Set up dark mode toggle
-const isDark = useDark({
-  selector: "body",
-  attribute: "color-scheme",
-  valueDark: "dark",
-  valueLight: "light",
-  value: preferredDark,
+const isDark = useDark();
+const colorMode = useColorMode({
+  modes: {
+    dim: "dim",
+    cafe: "cafe",
+  },
+  attribute: "theme",
 });
 const toggleDark = useToggle(isDark);
+// const toggleDark = useToggle(isDark);
 </script>
+
+<style>
+[theme="dark"] {
+  background: #252525;
+  color: rgb(59, 187, 80);
+}
+[theme="cafe"] {
+  background: #c0acac;
+  color: black;
+}
+[theme="dim"] {
+  background: gray;
+  color: white;
+}
+</style>
