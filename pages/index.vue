@@ -13,18 +13,9 @@
       </p>
     </div>
 
-    <div class="mt-14">
-      <v-btn
-        color="white"
-        variant="outlined"
-        elevation="24"
-        class="cursor-progress bg-success"
-        @click="downloadFile"
-      >
-        <v-icon> mdi-download </v-icon>
-        REsume
-      </v-btn>
-    </div>
+    <span class="mt-8 tagline">
+      Building tomorrow’s solutions with today’s code.
+    </span>
   </div>
   <!-- <skills /> -->
 </template>
@@ -119,26 +110,6 @@ const eraseText = () => {
   }
 };
 
-const generateNewFileName = (originalFileName) => {
-  const timestamp = new Date().getTime();
-  const fileExtension = originalFileName.split(".").pop();
-  const baseFileName = originalFileName.replace(`.${fileExtension}`, "");
-  console.log(baseFileName);
-  return `${baseFileName}_${timestamp}.${fileExtension}`;
-};
-const downloadFile = () => {
-  const filePath = "/imgs/William-Karial.pdf"; // Replace with your file path
-  const fileName = generateNewFileName("William-Karial.pdf"); // Replace with your desired file name
-
-  const link = document.createElement("a");
-  link.href = filePath;
-  link.download = fileName;
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
 onMounted(() => {
   setTimeout(typeText, newTextDelay + 200);
 });
@@ -198,5 +169,32 @@ onMounted(() => {
 }
 .blinking-cursor {
   animation: blink 1s step-end infinite;
+}
+.tagline {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(
+    90deg,
+    rgba(106, 27, 154, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+@media (max-width: 768px) {
+  .tagline {
+    font-size: 2rem;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tagline {
+    font-size: 1.1rem;
+    padding: 10px;
+  }
 }
 </style>

@@ -48,10 +48,43 @@
         <v-icon color="primary" size="32">mdi-linkedin</v-icon>
       </v-btn>
     </v-card-actions>
+    <v-card-actions>
+      <v-btn
+        color="primary"
+        block
+        elevation="2"
+        class="mt-3 v-btn-download"
+        rounded
+        tile
+        @click="downloadFile"
+      >
+        <v-icon left>mdi-download</v-icon>
+        Download Resume
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script setup>
+const generateNewFileName = (originalFileName) => {
+  const timestamp = new Date().getTime();
+  const fileExtension = originalFileName.split(".").pop();
+  const baseFileName = originalFileName.replace(`.${fileExtension}`, "");
+  console.log(baseFileName);
+  return `${baseFileName}_${timestamp}.${fileExtension}`;
+};
+const downloadFile = () => {
+  const filePath = "/imgs/William-Karial.pdf"; // Replace with your file path
+  const fileName = generateNewFileName("William-Karial.pdf"); // Replace with your desired file name
+
+  const link = document.createElement("a");
+  link.href = filePath;
+  link.download = fileName;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 const redirectToX = () => {
   window.open("https://twitter.com/willy_karia", "_blank");
 };
@@ -116,5 +149,10 @@ const redirectToLinked = () => {
 .social-icon:hover .v-icon {
   transform: scale(1.3);
   color: #1976d2;
+}
+.v-btn-download {
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 </style>
