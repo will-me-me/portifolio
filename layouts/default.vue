@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :theme="colorMode.value">
     <!-- Application Bar with Elevated Effect and Rounded Corners -->
     <v-app-bar
       flat
@@ -82,32 +82,24 @@
         @click="navigateTo('projects')"
         >Projects</v-btn
       >
-
-      <!-- Icons on the Right Side -->
-      <!-- <v-btn icon @click="showHeart">
-        <v-icon color="white">mdi-heart</v-icon>
-      </v-btn>
-      <v-btn icon @click="search">
-        <v-icon color="white">mdi-magnify</v-icon>
-      </v-btn>
-      <v-btn icon @click="openMenu">
-        <v-icon color="white">mdi-dots-vertical</v-icon>
-      </v-btn> -->
     </v-app-bar>
 
     <!-- Main Content -->
     <v-main>
       <slot />
-      <!-- <NuxtPage /> -->
     </v-main>
-    <!-- <br /> -->
-    <!-- <br /> -->
     <app-footer :links="links" />
     <app-drawe :links="links" v-model="drawer" />
   </v-app>
 </template>
 
 <script setup>
+import {
+  useDark,
+  useToggle,
+  usePreferredDark,
+  useColorMode,
+} from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 const links = [
@@ -117,6 +109,14 @@ const links = [
   { name: "Skills", path: "/skills", icon: "mdi-tools" },
   { name: "Projects", path: "/projects", icon: "mdi-folder-outline" },
 ];
+
+const colorMode = useColorMode({
+  modes: {
+    dim: "dim",
+    cafe: "cafe",
+  },
+  attribute: "theme",
+});
 
 const drawer = ref(false);
 
@@ -169,5 +169,19 @@ const navigateTo = (page) => {
   color: purple; /* White icon for visibility */
   font-size: 25px; /* Larger size for a modern look */
   transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition on hover */
+}
+[theme="dark"] {
+  background: #252525;
+  color: rgb(59, 187, 80);
+}
+
+[theme="cafe"] {
+  background: #c0acac;
+  color: black;
+}
+
+[theme="dim"] {
+  background: gray;
+  color: white;
 }
 </style>

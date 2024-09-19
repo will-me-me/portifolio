@@ -12,10 +12,11 @@
       >
         {{ link.name }}
       </v-btn>
-      <v-btn @click="toggleDark()" class="mx-2" color="white" rounded="xl">
+      <v-btn @click="toggleColorMode()" class="mx-2" color="white" rounded="xl">
         <!-- Conditional Icon based on dark mode state -->
-        <v-icon v-if="isDark" color="yellow">mdi-moon-waning-crescent</v-icon>
-        <v-icon v-else color="blue">mdi-white-balance-sunny</v-icon>
+        <v-icon :color="isDark ? 'yellow' : 'blue'">
+          {{ isDark ? "mdi-moon-waning-crescent" : "mdi-white-balance-sunny" }}
+        </v-icon>
 
         <!-- Text Label for Dark/Light mode -->
         <span class="ml-2">{{ isDark ? "Dark" : "Light" }}</span>
@@ -33,11 +34,16 @@ import {
   usePreferredDark,
   useColorMode,
 } from "@vueuse/core";
+// import { useColorMode } from "vueuse";
 
 const props = defineProps({
   links: {
     type: Array,
     required: true,
+  },
+  colorMode: {
+    type: String,
+    require: true,
   },
 });
 // Detect if the system prefers dark mode
@@ -49,19 +55,24 @@ const colorMode = useColorMode({
   },
   attribute: "theme",
 });
-const toggleDark = useToggle(isDark);
-// const toggleDark = useToggle(isDark);
+
+const toggleColorMode = () => {
+  colorMode.value = colorMode.value === "dark" ? "light" : "dark";
+  console.log(colorMode.value);
+};
 </script>
 
-<style>
+<style scoped>
 [theme="dark"] {
   background: #252525;
   color: rgb(59, 187, 80);
 }
+
 [theme="cafe"] {
   background: #c0acac;
   color: black;
 }
+
 [theme="dim"] {
   background: gray;
   color: white;
