@@ -8,6 +8,7 @@
             cols="12"
             md="3"
             sm="4"
+            class="mb-6"
             v-for="skills in mySkills"
             :key="skills.title"
           >

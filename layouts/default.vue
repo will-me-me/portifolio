@@ -1,5 +1,5 @@
 <template>
-  <v-app :theme="colorMode.value">
+  <v-app>
     <!-- Application Bar with Elevated Effect and Rounded Corners -->
     <v-app-bar
       flat
