@@ -22,7 +22,9 @@
         <span class="ml-2">{{ isDark ? "Dark" : "Light" }}</span>
       </v-btn>
       <v-col class="text-center mt-4" cols="12">
-        {{ new Date().getFullYear() }} — <strong> William Karia </strong>
+        <span class="footer-text">
+          &copy; {{ new Date().getFullYear() }} — <strong>William Karia</strong>
+        </span>
       </v-col>
     </v-row>
   </v-footer>
