@@ -74,7 +74,7 @@
                 :key="index"
                 size="x-small"
                 class="ma-1"
-                color="purple-lighten-4"
+                color="purple"
               >
                 {{ tech }}
               </v-chip>
@@ -82,7 +82,7 @@
                 v-if="service.technologies.length > 3"
                 size="x-small"
                 class="ma-1"
-                color="purple-lighten-3"
+                color="purple-lighten-2"
               >
                 +{{ service.technologies.length - 3 }} more
               </v-chip>
@@ -120,7 +120,7 @@
             variant="flat"
             color="white"
             class="text-purple-darken-2"
-            to="/contact"
+            to="/about"
           >
             Contact Us Today
           </v-btn>
