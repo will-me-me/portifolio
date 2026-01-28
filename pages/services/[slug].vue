@@ -220,7 +220,7 @@
                 variant="flat"
                 color="white"
                 class="text-purple-darken-2"
-                to="/contact"
+                to="/about"
                 prepend-icon="mdi-email"
               >
                 Request a Quote
