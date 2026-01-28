@@ -119,7 +119,7 @@
                 <v-chip
                   v-for="(tech, index) in service.technologies"
                   :key="index"
-                  color="purple-lighten-4"
+                  color="purple-lighten"
                   size="default"
                   class="ma-1"
                 >
@@ -158,7 +158,9 @@
                       <v-icon color="purple-darken-2" class="mr-3"
                         >mdi-checkbox-marked-circle</v-icon
                       >
-                      <span class="text-body-2">{{ deliverable }}</span>
+                      <span class="text-body-2 text-purple-darken-1">{{
+                        deliverable
+                      }}</span>
                     </div>
                   </v-card>
                 </v-col>
