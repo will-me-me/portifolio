@@ -74,7 +74,7 @@ const generateNewFileName = (originalFileName) => {
   return `${baseFileName}_${timestamp}.${fileExtension}`;
 };
 const downloadFile = () => {
-  const filePath = "/imgs/William-Karial.pdf"; // Replace with your file path
+  const filePath = "/imgs/William-Karia_1.pdf"; // Replace with your file path
   const fileName = generateNewFileName("William-Karial.pdf"); // Replace with your desired file name
 
   const link = document.createElement("a");
