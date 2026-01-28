@@ -3,7 +3,7 @@
     <v-row justify="center" no-gutters>
       <v-btn
         v-for="link in links"
-        :key="link"
+        :key="link.name"
         class="mx-2"
         color="white"
         rounded="xl"
@@ -12,15 +12,12 @@
       >
         {{ link.name }}
       </v-btn>
-      <v-btn @click="toggleColorMode()" class="mx-2" color="white" rounded="xl">
-        <!-- Conditional Icon based on dark mode state -->
+      <!-- <v-btn @click="toggleTheme" class="mx-2" color="white" rounded="xl">
         <v-icon :color="isDark ? 'yellow' : 'blue'">
           {{ isDark ? "mdi-moon-waning-crescent" : "mdi-white-balance-sunny" }}
         </v-icon>
-
-        <!-- Text Label for Dark/Light mode -->
         <span class="ml-2">{{ isDark ? "Dark" : "Light" }}</span>
-      </v-btn>
+      </v-btn> -->
       <v-col class="text-center mt-4" cols="12">
         <span class="footer-text">
           &copy; {{ new Date().getFullYear() }} — <strong>William Karia</strong>
@@ -29,54 +26,43 @@
     </v-row>
   </v-footer>
 </template>
+
 <script setup>
-import {
-  useDark,
-  useToggle,
-  usePreferredDark,
-  useColorMode,
-} from "@vueuse/core";
-// import { useColorMode } from "vueuse";
+import { ref, computed, onMounted } from "vue";
+import { useTheme } from "vuetify";
 
 const props = defineProps({
   links: {
     type: Array,
     required: true,
   },
-  colorMode: {
-    type: String,
-    require: true,
-  },
-});
-// Detect if the system prefers dark mode
-const isDark = useDark();
-const colorMode = useColorMode({
-  modes: {
-    dim: "dim",
-    cafe: "cafe",
-  },
-  attribute: "theme",
 });
 
-const toggleColorMode = () => {
-  colorMode.value = colorMode.value === "dark" ? "light" : "dark";
-  console.log(colorMode.value);
+const theme = useTheme();
+const currentTheme = ref("light");
+
+const isDark = computed(() => currentTheme.value === "dark");
+
+const toggleTheme = () => {
+  currentTheme.value = currentTheme.value === "dark" ? "light" : "dark";
+  theme.global.name.value = currentTheme.value;
+  localStorage.setItem("theme", currentTheme.value);
 };
+
+onMounted(() => {
+  const savedTheme = localStorage.getItem("theme") || "light";
+  currentTheme.value = savedTheme;
+  theme.global.name.value = savedTheme;
+});
 </script>
 
 <style scoped>
-[theme="dark"] {
-  background: #252525;
-  color: rgb(59, 187, 80);
+.v-footer {
+  transition: background-color 0.3s ease;
 }
 
-[theme="cafe"] {
-  background: #c0acac;
-  color: black;
-}
-
-[theme="dim"] {
-  background: gray;
+.footer-text {
   color: white;
+  font-size: 0.875rem;
 }
 </style>
