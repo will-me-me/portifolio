@@ -61,12 +61,12 @@ import { ref } from "vue";
 
 const projects = ref([
   {
-    title: "E-Commerce Platform",
-    image: "/images/ecommerce.jpg", // Replace with your image path
+    title: "Car Price Predictor",
+    image: "/imgs/mlwa.png",
     description:
-      "A fully functional e-commerce platform with secure payment integration and user management.",
-    technology: "Vue.js, Nuxt.js, Stripe API",
-    link: "https://example.com/ecommerce", // Replace with your project link
+      "🎯 89% Accurate Car Price Prediction | Real-time ML predictions | User authentication | Prediction history tracking | Dark/Light theme | Responsive design | 24 vehicle features analyzed",
+    technology: "Vue.js, FastAPI, scikit-learn, MongoDB, JWT, Vuetify",
+    link: "https://car-price-predictor-inky.vercel.app/",
   },
   {
     title: "Business Analytics Dashboard",
