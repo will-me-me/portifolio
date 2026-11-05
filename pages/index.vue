@@ -1,83 +1,87 @@
 <template>
-  <div
-    class="d-flex flex-column justify-center align-center main_cotainer px-4"
-    id="hero-section"
-  >
-    <h1 class="hero-heading">William Karia</h1>
-    <div>
-      <p class="mt-0">
-        I am
-        <span class="typed-text">{{ typeValue }}</span>
-        <span class="blinking-cursor">|</span>
-        <span class="cursor" :class="{ typing: typeStatus }">&nbsp;</span>
-      </p>
+  <div class="hero-container" id="hero-section">
+    <!-- Animated background elements -->
+    <div class="bg-gradient"></div>
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
     </div>
 
-    <span class="mt-8 tagline">
-      Building tomorrow’s solutions with today’s code.
-    </span>
+    <div class="content-wrapper">
+      <div class="hero-content">
+        <span class="greeting">Hello, I'm</span>
+        <h1 class="hero-heading">William Karia</h1>
+
+        <div class="typed-container">
+          <span class="typed-prefix">I am a</span>
+          <span class="typed-text">{{ typeValue }}</span>
+          <span class="blinking-cursor">|</span>
+        </div>
+
+        <p class="tagline">Building tomorrow's solutions with today's code.</p>
+
+        <div class="cta-buttons">
+          <v-btn
+            class="cta-primary"
+            size="large"
+            rounded="pill"
+            @click="$router.push('/projects')"
+          >
+            <v-icon start>mdi-folder-outline</v-icon>
+            View Projects
+          </v-btn>
+          <v-btn
+            class="cta-secondary"
+            size="large"
+            rounded="pill"
+            variant="outlined"
+            @click="$router.push('/about')"
+          >
+            <v-icon start>mdi-account</v-icon>
+            About Me
+          </v-btn>
+        </div>
+
+        <div class="social-links">
+          <v-btn icon class="social-btn" @click="redirectToX">
+            <v-icon>mdi-twitter</v-icon>
+          </v-btn>
+          <v-btn icon class="social-btn" @click="OpenGit">
+            <v-icon>mdi-github</v-icon>
+          </v-btn>
+          <v-btn icon class="social-btn" @click="redirectToLinked">
+            <v-icon>mdi-linkedin</v-icon>
+          </v-btn>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <v-icon>mdi-chevron-down</v-icon>
+      </div>
+    </div>
   </div>
-  <!-- <skills /> -->
 </template>
 
 <script setup>
-// import Typed from "typed.js";
-import { reactive, shallowRef } from "vue";
-import { useAnimate } from "@vueuse/core";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
-const el = shallowRef(null);
-
-const {
-  play,
-  pause,
-  reverse,
-  finish,
-  cancel,
-  startTime,
-  currentTime,
-  playbackRate,
-  playState,
-  replaceState,
-  pending,
-} = useAnimate(
-  el,
-  [
-    { clipPath: "circle(20% at 0% 30%)" },
-    { clipPath: "circle(20% at 50% 80%)" },
-    { clipPath: "circle(20% at 100% 30%)" },
-  ],
-  {
-    duration: 3000,
-    iterations: 5,
-    direction: "alternate",
-    easing: "cubic-bezier(0.46, 0.03, 0.52, 0.96)",
-  }
-);
-
-const text = reactive({
-  startTime,
-  currentTime,
-  playbackRate,
-  playState,
-  replaceState,
-  pending,
-});
 const typeValue = ref("");
 const typeStatus = ref(false);
 let displayTextArray = [
-  "SoftWare Engeneer",
-  "The Best Python Developer",
-  "Vue.js Developer",
-  "Nuxt.js proven Ninja 🥷",
-  "FastApi Ninja 🥷",
-  "Unavoidable",
+  "Software Engineer",
+  "Python Developer",
+  "Vue.js Expert",
+  "Nuxt.js Ninja 🥷",
+  "FastAPI Specialist",
+  "Problem Solver",
 ];
 let typingSpeed = 100;
-let erasingSpeed = 200;
-let newTextDelay = 5000;
+let erasingSpeed = 50;
+let newTextDelay = 2000;
 let displayTextArrayIndex = 0;
 let charIndex = 0;
+let timeoutId = null;
 
 const typeText = () => {
   if (charIndex < displayTextArray[displayTextArrayIndex].length) {
@@ -85,10 +89,10 @@ const typeText = () => {
     typeValue.value +=
       displayTextArray[displayTextArrayIndex].charAt(charIndex);
     charIndex += 1;
-    setTimeout(typeText, typingSpeed);
+    timeoutId = setTimeout(typeText, typingSpeed);
   } else {
     typeStatus.value = false;
-    setTimeout(eraseText, newTextDelay);
+    timeoutId = setTimeout(eraseText, newTextDelay);
   }
 };
 
@@ -100,101 +104,349 @@ const eraseText = () => {
       charIndex - 1
     );
     charIndex -= 1;
-    setTimeout(eraseText, erasingSpeed);
+    timeoutId = setTimeout(eraseText, erasingSpeed);
   } else {
     typeStatus.value = false;
     displayTextArrayIndex += 1;
     if (displayTextArrayIndex >= displayTextArray.length)
       displayTextArrayIndex = 0;
-    setTimeout(typeText, typingSpeed + 1000);
+    timeoutId = setTimeout(typeText, typingSpeed + 500);
   }
 };
 
+const redirectToX = () => {
+  window.open("https://twitter.com/willy_karia", "_blank");
+};
+const OpenGit = () => {
+  window.open("https://github.com/will-me-me", "_blank");
+};
+const redirectToLinked = () => {
+  window.open("https://www.linkedin.com/in/william-karia-9aa548214/", "_blank");
+};
+
 onMounted(() => {
-  setTimeout(typeText, newTextDelay + 200);
+  timeoutId = setTimeout(typeText, 500);
+});
+
+onUnmounted(() => {
+  if (timeoutId) clearTimeout(timeoutId);
 });
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
-.main_cotainer {
-  background-size: cover;
-  background-color: #f5f5f5;
+.hero-container {
+  position: relative;
+  min-height: 100vh;
   width: 100%;
-  height: 100vh;
-  background-image: url("../public/imgs/growtika-yGQmjh2uOTg-unsplash.jpg");
-  background-attachment: fixed;
-  background-position: center center;
-  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0f;
 }
 
-.main_cotainer::before {
-  content: "";
-  background: rgba(5, 13, 24, 0.3);
+/* Animated gradient background */
+.bg-gradient {
   position: absolute;
-  width: 100%;
-  height: 100vh;
-  opacity: 0.8;
-  position: absolute;
-  box-sizing: border-box;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  inset: 0;
+  background: radial-gradient(
+      ellipse at 20% 50%,
+      rgba(120, 80, 255, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(0, 200, 255, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 60% 80%,
+      rgba(255, 100, 200, 0.1) 0%,
+      transparent 50%
+    ),
+    linear-gradient(180deg, #0a0a0f 0%, #12121a 100%);
+  z-index: 0;
 }
 
-.hero-heading {
-  font-family: "Raleway", sans-serif;
-  margin: 0 0 10px 0;
-  font-size: 64px;
-  font-weight: 700;
-  line-height: 56px;
-  color: white;
+/* Floating shapes */
+.floating-shapes {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
-.typing {
-  font-size: 24px;
-  font-weight: bold;
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+  animation: float 20s infinite ease-in-out;
 }
-.main_cotainer p {
-  font-family: "Poppins", sans-serif;
-  color: #fff;
-  margin-bottom: 50px;
-  font-size: 26px;
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s;
 }
-.main_cotainer p span {
-  color: #fff;
-  padding-bottom: 4px;
-  letter-spacing: 1px;
-  border-bottom: 3px solid gold;
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  bottom: -50px;
+  right: -50px;
+  animation-delay: -7s;
 }
-.blinking-cursor {
-  animation: blink 1s step-end infinite;
+
+.shape-3 {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  top: 50%;
+  right: 10%;
+  animation-delay: -14s;
 }
-.tagline {
-  font-size: 1.8rem;
-  font-weight: 700;
-  text-align: center;
-  background: linear-gradient(
-    90deg,
-    rgba(106, 27, 154, 1) 0%,
-    rgba(255, 255, 255, 1) 100%
-  );
-  -webkit-background-clip: text;
-  color: transparent;
-  padding: 20px;
-  font-family: "Poppins", sans-serif;
-}
-@media (max-width: 768px) {
-  .tagline {
-    font-size: 2rem;
-    padding: 15px;
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  75% {
+    transform: translate(20px, 30px) scale(1.05);
   }
 }
 
-@media (max-width: 480px) {
-  .tagline {
-    font-size: 1.1rem;
-    padding: 10px;
+/* Content wrapper */
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 900px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-content {
+  text-align: center;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.greeting {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #a78bfa;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.hero-heading {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0 0 24px 0;
+  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.typed-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  min-height: 48px;
+}
+
+.typed-prefix {
+  font-family: "Inter", sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.typed-text {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 600;
+  color: #60a5fa;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.blinking-cursor {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: #a78bfa;
+  animation: blink 1s step-end infinite;
+  font-weight: 300;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.tagline {
+  font-family: "Inter", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: #9ca3af;
+  font-weight: 400;
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.cta-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0.5px !important;
+  padding: 0 32px !important;
+  height: 52px !important;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.cta-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.6) !important;
+}
+
+.cta-secondary {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #e5e7eb !important;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0.5px !important;
+  padding: 0 32px !important;
+  height: 52px !important;
+  transition: all 0.3s ease !important;
+}
+
+.cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(-3px);
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.social-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #9ca3af !important;
+  transition: all 0.3s ease !important;
+}
+
+.social-btn:hover {
+  background: rgba(167, 139, 250, 0.2) !important;
+  border-color: rgba(167, 139, 250, 0.4) !important;
+  color: #a78bfa !important;
+  transform: translateY(-3px);
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.3);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+@media (max-width: 600px) {
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    width: 100%;
+  }
+
+  .shape-1 {
+    width: 250px;
+    height: 250px;
+  }
+  .shape-2 {
+    width: 200px;
+    height: 200px;
+  }
+  .shape-3 {
+    width: 150px;
+    height: 150px;
   }
 }
 </style>
