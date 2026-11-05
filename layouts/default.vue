@@ -1,107 +1,57 @@
 <template>
   <v-app>
-    <!-- Application Bar with Elevated Effect and Rounded Corners -->
-    <v-app-bar
-      flat
-      rounded
-      color=""
-      height="100"
-      style="border-bottom: 5px solid #6a1b9a"
-    >
-      <div class="mt-0 d-flex justify-center ml-4 hidden-lg-and-up">
-        <v-avatar
-          class="hidden-lg-and-up"
-          variant="outlined"
-          size="50"
-          image="/imgs/DSC_116511.jpg"
-          style="border: 1px solid purple"
-        ></v-avatar>
+    <v-app-bar class="app-bar-modern" flat height="80">
+      <!-- Logo / Avatar -->
+      <div class="logo-section ml-4" @click="$router.push('/')">
+        <v-avatar size="44" class="logo-avatar">
+          <v-img src="/imgs/DSC_116511.jpg" alt="William Karia" />
+        </v-avatar>
+        <span class="logo-text hidden-sm-and-down">William Karia</span>
       </div>
-      <div class="mt-0 d-flex justify-center ml-12 hidden-sm-and-down">
-        <v-avatar
-          class="hidden-sm-and-down"
-          variant="outlined"
-          size="60"
-          image="/imgs/DSC_116511.jpg"
-          style="border: 2px solid purple"
-        ></v-avatar>
-      </div>
-      <div class="ml-4 hidden-sm-and-down">
-        <h1
-          style="color: rgba(255, 255, 255, 0.2)"
-          class="text-center drawer_anchor"
-        >
-          <a
-            href="http://
-                "
-            rel="noopener noreferrer"
-          >
-            William Karia
-          </a>
-        </h1>
-      </div>
-      <!-- Navigation Drawer Toggle Button -->
 
-      <!-- Application Title -->
-      <!-- <v-app-bar-title>My Portfolio</v-app-bar-title> -->
-
-      <!-- Navigation Links -->
       <v-spacer></v-spacer>
-      <v-app-bar-nav-icon
-        class="hidden-lg-and-up custom-nav-icon"
-        @click.stop="drawer = !drawer"
-      ></v-app-bar-nav-icon>
 
+      <!-- Desktop Nav -->
+      <div class="nav-links hidden-sm-and-down">
+        <v-btn
+          v-for="link in links"
+          :key="link.name"
+          class="nav-btn"
+          :class="{ active: $route.path === link.path }"
+          @click="navigateTo(link)"
+        >
+          <v-icon start size="18">{{ link.icon }}</v-icon>
+          {{ link.name }}
+        </v-btn>
+      </div>
+
+      <!-- Mobile Menu -->
       <v-btn
-        text
-        class="mx-2 white--text hidden-sm-and-down"
-        @click="navigateTo('home')"
-        >Home</v-btn
+        icon
+        class="menu-btn hidden-lg-and-up"
+        @click.stop="drawer = !drawer"
       >
-      <v-btn
-        text
-        class="mx-2 white--text hidden-sm-and-down"
-        @click="navigateTo('about')"
-        >About</v-btn
-      >
-      <v-btn
-        text
-        class="mx-2 white--text hidden-sm-and-down"
-        @click="navigateTo('services')"
-        >Services</v-btn
-      >
-      <v-btn
-        text
-        class="mx-2 white--text hidden-sm-and-down"
-        @click="navigateTo('skills')"
-        >Skills</v-btn
-      >
-      <v-btn
-        text
-        class="mx-2 white--text hidden-sm-and-down"
-        @click="navigateTo('projects')"
-        >Projects</v-btn
-      >
+        <v-icon size="24">mdi-menu</v-icon>
+      </v-btn>
     </v-app-bar>
 
     <!-- Main Content -->
     <v-main>
       <slot />
     </v-main>
+
     <app-footer :links="links" />
     <app-drawe :links="links" v-model="drawer" />
   </v-app>
 </template>
 
 <script setup>
-import {
-  useDark,
-  useToggle,
-  usePreferredDark,
-  useColorMode,
-} from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+
+const router = useRouter();
+const drawer = ref(false);
+
 const links = [
   { name: "Home", path: "/", icon: "mdi-home" },
   { name: "About", path: "/about", icon: "mdi-account" },
@@ -110,78 +60,75 @@ const links = [
   { name: "Projects", path: "/projects", icon: "mdi-folder-outline" },
 ];
 
-const colorMode = useColorMode({
-  modes: {
-    dim: "dim",
-    cafe: "cafe",
-  },
-  attribute: "theme",
-});
-
-const drawer = ref(false);
-
-const router = useRouter();
-const navigateTo = (page) => {
-  if (page == "home") {
-    router.push("/");
-  }
-  router.push({ name: page });
+const navigateTo = (link) => {
+  router.push(link.path);
 };
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
-/* Add custom styles */
-.v-btn:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transition: background-color 0.3s ease;
-}
-
-.v-icon {
-  font-size: 28px;
+.app-bar-modern {
+  background: rgba(10, 10, 15, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
-.v-app-bar-title {
-  font-weight: bold;
-  font-family: "Poppins", sans-serif;
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 
-.v-btn {
-  font-weight: 600;
-  font-family: "Poppins", sans-serif;
+.logo-section:hover {
+  opacity: 0.8;
 }
 
-.drawer_anchor {
-  font-size: 24px;
-  margin: 0;
-  padding: 0;
-  font-weight: 600;
-  -moz-text-align-last: center;
-  text-align-last: center;
-  font-family: "Poppins", sans-serif;
-}
-.drawer_anchor a {
-  text-decoration: none;
-  color: rgba(10, 10, 10, 0.979);
-}
-.custom-nav-icon {
-  color: purple; /* White icon for visibility */
-  font-size: 25px; /* Larger size for a modern look */
-  transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition on hover */
-}
-[theme="dark"] {
-  background: #252525;
-  color: rgb(59, 187, 80);
+.logo-avatar {
+  border: 2px solid rgba(167, 139, 250, 0.4);
+  box-shadow: 0 0 20px rgba(167, 139, 250, 0.2);
 }
 
-[theme="cafe"] {
-  background: #c0acac;
-  color: black;
+.logo-text {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
 }
 
-[theme="dim"] {
-  background: gray;
-  color: white;
+.nav-links {
+  display: flex;
+  gap: 4px;
+  margin-right: 16px;
+}
+
+.nav-btn {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: #9ca3af !important;
+  border-radius: 10px !important;
+  padding: 0 16px !important;
+  height: 40px !important;
+  transition: all 0.3s ease !important;
+}
+
+.nav-btn:hover {
+  background: rgba(167, 139, 250, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.nav-btn.active {
+  background: rgba(167, 139, 250, 0.15) !important;
+  color: #a78bfa !important;
+}
+
+.menu-btn {
+  color: #a78bfa !important;
+  margin-right: 8px;
 }
 </style>
