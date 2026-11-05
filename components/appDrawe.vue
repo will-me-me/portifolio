@@ -1,91 +1,83 @@
 <template>
   <v-navigation-drawer
-    class="bg-#040b14"
-    theme="dark"
-    :width="300"
-    color="#040b14"
+    class="drawer-modern"
+    :width="280"
     temporary
     floating
+    v-model="drawerModel"
   >
-    <div class="mt-0 d-flex justify-center">
-      <v-avatar
-        variant="outlined"
-        size="130"
-        image="/imgs/DSC_116511.jpg"
-      ></v-avatar>
-    </div>
-    <div class="mt-4">
-      <h1 style="color: #fff" class="text-center drawer_anchor">
-        <a
-          href="http://
-                "
-          rel="noopener noreferrer"
-        >
-          William Karia
-        </a>
-      </h1>
-    </div>
-    <div class="d-flex align-center justify-space-evenly mt-3">
-      <v-icon
-        @click="redirectToX"
-        variant="outlined"
-        color=""
-        icon="mdi-twitter"
-        size="x-large"
-      ></v-icon>
-      <v-icon
-        @click="OpenGit"
-        variant="outlined"
-        color=""
-        icon="mdi-github"
-        size="x-large"
-      ></v-icon>
-      <v-icon
-        @click="redirectToLinked"
-        variant="outlined"
-        color=""
-        icon="mdi-linkedin"
-        size="x-large"
-      ></v-icon>
-    </div>
-    <br />
-    <v-divider></v-divider>
+    <div class="drawer-content">
+      <!-- Avatar -->
+      <div class="drawer-avatar-section">
+        <v-avatar size="100" class="drawer-avatar">
+          <v-img src="/imgs/DSC_116511.jpg" alt="William Karia" />
+        </v-avatar>
+        <h2 class="drawer-name">William Karia</h2>
+        <p class="drawer-role">Software Engineer</p>
+      </div>
 
-    <v-list
-      v-for="(link, i) in links"
-      :key="i"
-      density="compact"
-      class="ml-9"
-      nav
-    >
-      <v-list-item
-        :prepend-icon="link.icon"
-        :title="link.name"
-        :value="link.name"
-        @click="navigateTo(link.path)"
-      ></v-list-item>
-    </v-list>
+      <!-- Social -->
+      <div class="drawer-social">
+        <v-btn icon class="social-btn" @click="redirectToX">
+          <v-icon size="20">mdi-twitter</v-icon>
+        </v-btn>
+        <v-btn icon class="social-btn" @click="OpenGit">
+          <v-icon size="20">mdi-github</v-icon>
+        </v-btn>
+        <v-btn icon class="social-btn" @click="redirectToLinked">
+          <v-icon size="20">mdi-linkedin</v-icon>
+        </v-btn>
+      </div>
+
+      <!-- Divider -->
+      <div class="drawer-divider"></div>
+
+      <!-- Links -->
+      <div class="drawer-links">
+        <v-btn
+          v-for="(link, i) in links"
+          :key="i"
+          class="drawer-link"
+          :class="{ active: $route.path === link.path }"
+          block
+          @click="navigateTo(link.path)"
+        >
+          <v-icon start size="20">{{ link.icon }}</v-icon>
+          {{ link.name }}
+        </v-btn>
+      </div>
+    </div>
   </v-navigation-drawer>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import { computed } from "vue";
 
 const router = useRouter();
+const route = useRoute();
 
 const props = defineProps({
   links: {
     type: Array,
     required: true,
   },
-  drawer: {
+  modelValue: {
     type: Boolean,
     default: false,
   },
 });
 
+const emit = defineEmits(["update:modelValue"]);
+
+const drawerModel = computed({
+  get: () => props.modelValue,
+  set: (val) => emit("update:modelValue", val),
+});
+
 const navigateTo = (path) => {
   router.push(path);
+  drawerModel.value = false;
 };
 
 const redirectToX = () => {
@@ -98,20 +90,103 @@ const redirectToLinked = () => {
   window.open("https://www.linkedin.com/in/william-karia-9aa548214/", "_blank");
 };
 </script>
-<style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
-.drawer_anchor {
-  font-size: 24px;
-  margin: 0;
-  padding: 0;
-  font-weight: 600;
-  -moz-text-align-last: center;
-  text-align-last: center;
-  font-family: "Poppins", sans-serif;
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+.drawer-modern {
+  background: #0a0a0f !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
-.drawer_anchor a {
-  text-decoration: none;
-  color: #fff;
+
+.drawer-content {
+  padding: 40px 20px 20px;
+}
+
+.drawer-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.drawer-avatar {
+  border: 3px solid rgba(167, 139, 250, 0.4);
+  box-shadow: 0 0 30px rgba(167, 139, 250, 0.2);
+  margin-bottom: 16px;
+}
+
+.drawer-name {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.drawer-role {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  color: #a78bfa;
+  margin: 0;
+}
+
+.drawer-social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.social-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #9ca3af !important;
+  transition: all 0.3s ease !important;
+}
+
+.social-btn:hover {
+  background: rgba(167, 139, 250, 0.15) !important;
+  border-color: rgba(167, 139, 250, 0.4) !important;
+  color: #a78bfa !important;
+}
+
+.drawer-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(167, 139, 250, 0.3),
+    transparent
+  );
+  margin: 28px 0;
+}
+
+.drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drawer-link {
+  justify-content: flex-start !important;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: #9ca3af !important;
+  border-radius: 12px !important;
+  height: 48px !important;
+  transition: all 0.3s ease !important;
+}
+
+.drawer-link:hover {
+  background: rgba(167, 139, 250, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.drawer-link.active {
+  background: rgba(167, 139, 250, 0.15) !important;
+  color: #a78bfa !important;
 }
 </style>
