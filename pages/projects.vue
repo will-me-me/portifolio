@@ -95,21 +95,31 @@ const projects = ref([
     link: "https://car-price-predictor-inky.vercel.app/",
   },
   {
-    title: "Business Analytics Dashboard",
-    image: "/images/dashboard.jpg", // Replace with your image path
+    title: "LLM Knowledge Extractor",
+    image: "/imgs/llm-knowledge-extractor.jpg",
     description:
-      "A real-time business analytics dashboard that visualizes key metrics and KPIs.",
-    technology: "Vue.js, D3.js, FastAPI",
-    link: "https://example.com/dashboard", // Replace with your project link
+      "An AI-powered application that extracts structured knowledge and insights from unstructured text using Large Language Models. Users can submit content, process it with Claude AI, and store extracted information for retrieval.",
+    technology:
+      "Python, FastAPI, Nuxt.js, Vue.js, PostgreSQL, SQLAlchemy, Claude AI",
+    link: "https://github.com/will-me-me",
   },
   {
-    title: "Social Media App",
-    image: "/images/social-media.jpg", // Replace with your image path
+    title: "Church Management System",
+    image: "/imgs/church-management.jpg",
     description:
-      "A mobile-responsive social media platform for connecting people and sharing content.",
-    technology: "Vue.js, Firebase, Tailwind CSS",
-    link: "https://example.com/social-media", // Replace with your project link
+      "A church management platform for managing members, financial records, expenses, fellowships, payments, and Sunday service reports, with M-Pesa payment integration.",
+    technology: "Vue.js, Nuxt.js, Express.js, MongoDB, M-Pesa API",
+    link: "https://github.com/will-me-me",
   },
+  {
+    title: "Interview Guard",
+    image: "/imgs/interview-guard.jpg",
+    description:
+      "An interview integrity platform designed to manage online interviews, verify candidates, monitor interview sessions, and provide real-time communication between interview participants and administrators.",
+    technology: "Python, FastAPI, Nuxt.js, Vue.js, MongoDB, WebSockets",
+    link: "https://github.com/will-me-me",
+  },
+
   {
     title: "Portfolio Website",
     image: "/images/portfolio.jpg", // Replace with your image path
